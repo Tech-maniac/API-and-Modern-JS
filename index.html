@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="container">
+
+    </div>
+    <div id="joke">
+
+    </div>
+    <button id="jokeBtn">Generate Joke</button>
+
+    <script>
+        const containerRef = document.getElementById("container");
+        const jokeRef = document.getElementById("joke");
+        const jokeBtnRef = document.getElementById("jokeBtn");
+
+        const request = new XMLHttpRequest(); 
+
+        request.open('GET',"https://restcountries.com/v3.1/name/nepal");
+
+        request.send();
+
+        //Getting response : 
+        request.addEventListener('load',function(){
+            console.log(this.responseText);
+
+            const [data] = JSON.parse(this.responseText);
+
+            console.log(data.capital);
+        })
+
+        //Using Promises :
+
+        //fulfil or reject
+
+        const generateJokes=()=>{
+
+            const setHeader={
+                headers : {
+                    Accept : "application/json"
+                }
+            }
+
+            fetch("https://icanhazdadjoke.com",setHeader)
+            .then((res)=>res.json())
+            .then((data) => {
+                jokeRef.innerHTML = data.joke;
+            })
+            .catch((error)=>{console.log("error")})
+        }
+
+        jokeBtnRef.addEventListener('click',generateJokes);
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+</body>
+</html>
